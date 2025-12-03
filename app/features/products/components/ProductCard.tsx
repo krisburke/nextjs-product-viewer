@@ -1,23 +1,35 @@
+'use client';
+
+import { memo } from 'react';
 import Image from 'next/image';
 import { Product } from '../lib/types';
 import { formatPrice } from '@/app/common/utils';
 
 interface ProductCardProps {
   product: Product;
-  onClick?: () => void;
+  onClick?: (product: Product) => void;
 }
 
-export function ProductCard({ product, onClick }: ProductCardProps) {
+export const ProductCard = memo(function ProductCard({ product, onClick }: ProductCardProps) {
+  const handleCardClick = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>,
+  ) => {
+    event?.preventDefault();
+    onClick?.(product);
+  };
+
+  const handleCardEnter = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (event?.key === 'Enter' || event?.key === ' ') {
+      event?.preventDefault();
+      onClick?.(product);
+    }
+  };
+
   return (
     <article
       className="cursor-pointer overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-lg focus-within:ring-2 focus-within:ring-blue-500"
-      onClick={onClick}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onClick?.();
-        }
-      }}
+      onClick={handleCardClick}
+      onKeyDown={handleCardEnter}
       tabIndex={0}
       role="button"
       aria-label={`View details for ${product.title}`}
@@ -47,4 +59,4 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
       </div>
     </article>
   );
-}
+})

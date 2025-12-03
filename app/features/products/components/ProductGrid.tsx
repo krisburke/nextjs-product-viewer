@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Product } from '../lib/types';
 import { ProductCard } from './ProductCard';
@@ -15,15 +15,15 @@ export function ProductGrid({ products }: ProductGridProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleProductClick = (product: Product) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
-  };
+  const handleProductClick = useCallback((product: Product) => {
+  setSelectedProduct(product);
+  setIsModalOpen(true);
+}, []);
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedProduct(null);
-  };
+ const handleCloseModal = useCallback(() => {
+  setIsModalOpen(false);
+  setSelectedProduct(null);
+}, []);
 
   if (products.length === 0) {
     return (
@@ -43,7 +43,7 @@ export function ProductGrid({ products }: ProductGridProps) {
           <ProductCard
             key={product.id}
             product={product}
-            onClick={() => handleProductClick(product)}
+            onClick={handleProductClick}
           />
         ))}
       </section>
