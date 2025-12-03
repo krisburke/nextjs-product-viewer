@@ -8,7 +8,7 @@ export interface ProductFiltersProps {
   handleSelectFilter: (filter: string) => void;
 }
 
-export default function ProductFilters({
+export function ProductFilters({
   activeFilter,
   handleSelectFilter,
 }: ProductFiltersProps) {

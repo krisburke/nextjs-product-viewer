@@ -1,0 +1,37 @@
+import Image from 'next/image';
+import { Product } from '../lib/types';
+import { formatPrice } from '@/app/common/utils';
+
+interface ProductCardProps {
+  product: Product;
+}
+
+export function ProductCard({ product }: ProductCardProps) {
+  return (
+    <article className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-lg">
+      <figure className="aspect-square w-full overflow-hidden bg-gray-200">
+        <Image
+          src={product.images[0]}
+          alt={product.title}
+          width={300}
+          height={300}
+          className="h-full w-full object-cover"
+        />
+        <figcaption className="sr-only">{product.title}</figcaption>
+      </figure>
+      <div className="p-4">
+        <h2 className="mb-2 text-lg font-semibold text-gray-900">
+          {product.title}
+        </h2>
+        <p className="mb-4 line-clamp-2 text-sm text-gray-600">
+          {product.description}
+        </p>
+        <p className="flex items-center justify-between">
+          <span className="text-2xl font-bold text-gray-900">
+            {formatPrice(product.price)}
+          </span>
+        </p>
+      </div>
+    </article>
+  );
+}

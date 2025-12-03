@@ -27,5 +27,3 @@ export const CATEGORY_MAP: Record<ProductFilter, string[]> = {
   kitchen: ['kitchen-accessories'],
   bath: ['beauty', 'skin-care'],
 };
-
-export const PRODUCTS_URL = `${API_URL}/products`;

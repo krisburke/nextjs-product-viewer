@@ -1,13 +1,24 @@
 'use client';
-import Image from 'next/image';
 
-import ProductFilters from './features/products/components/ProductFilters';
+import { ProductFilters } from './features/products/components/ProductFilters';
 import { useProducts } from './features/products/hooks/useProducts';
-import { useQueryParam } from './common/hooks/useQueryParam';
+import { useQueryParams } from './common/hooks/useQueryParams';
+import { ProductGrid } from './features/products/components/ProductGrid';
+import { usePagination } from './common/hooks/usePagination';
+import { Pagination } from './common/components/Pagination';
 
 export default function ProductPage() {
-  const [category, setCategory] = useQueryParam('category');
-  const { products, isLoading, error } = useProducts();
+  const { getParam, setParams } = useQueryParams();
+  const category = getParam('category');
+  const setCategory = (value: string) => setParams({ category: value });
+
+  const { currentPage, pageSize, handlePageChange, handlePageSizeChange } =
+    usePagination();
+
+  const { products, isLoading, error, total } = useProducts({
+    page: currentPage,
+    pageSize,
+  });
 
   if (isLoading) {
     return (
@@ -50,41 +61,15 @@ export default function ProductPage() {
           handleSelectFilter={setCategory}
         />
 
-        <section
-          aria-label="Products"
-          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-        >
-          {products.map((product) => (
-            <article
-              key={product.id}
-              className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-lg"
-            >
-              <figure className="aspect-square w-full overflow-hidden bg-gray-200">
-                <Image
-                  src={product.images[0]}
-                  alt={product.title}
-                  width={300}
-                  height={300}
-                  className="h-full w-full object-cover"
-                />
-                <figcaption className="sr-only">{product.title}</figcaption>
-              </figure>
-              <div className="p-4">
-                <h2 className="mb-2 text-lg font-semibold text-gray-900">
-                  {product.title}
-                </h2>
-                <p className="mb-4 line-clamp-2 text-sm text-gray-600">
-                  {product.description}
-                </p>
-                <p className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-gray-900">
-                    ${product.price.toFixed(2)}
-                  </span>
-                </p>
-              </div>
-            </article>
-          ))}
-        </section>
+        <ProductGrid products={products} />
+
+        <Pagination
+          currentPage={currentPage}
+          totalItems={total}
+          pageSize={pageSize}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+        />
       </main>
     </div>
   );
