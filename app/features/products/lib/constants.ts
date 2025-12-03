@@ -1,5 +1,3 @@
-import { API_URL } from '@/app/lib/constants';
-
 export const PRODUCT_FILTERS = [
   { key: 'all', label: 'All Products' },
   { key: 'living-room', label: 'Living Room' },

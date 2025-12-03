@@ -4,11 +4,24 @@ import { formatPrice } from '@/app/common/utils';
 
 interface ProductCardProps {
   product: Product;
+  onClick?: () => void;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, onClick }: ProductCardProps) {
   return (
-    <article className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-lg">
+    <article
+      className="cursor-pointer overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-lg focus-within:ring-2 focus-within:ring-blue-500"
+      onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick?.();
+        }
+      }}
+      tabIndex={0}
+      role="button"
+      aria-label={`View details for ${product.title}`}
+    >
       <figure className="aspect-square w-full overflow-hidden bg-gray-200">
         <Image
           src={product.images[0]}
