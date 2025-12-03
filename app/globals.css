@@ -2,16 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  h1 {
+    @apply text-3xl font-bold tracking-tight;
+  }
+  h2 {
+    @apply text-2xl font-semibold mt-6 mb-2;
+  }
+  h3 {
+    @apply text-xl font-semibold mt-4 mb-1;
+  }
+  p {
+    @apply text-base leading-relaxed;
+  }
+  a {
+    @apply text-blue-600 hover:underline;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
