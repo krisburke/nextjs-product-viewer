@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { X } from 'lucide-react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -88,10 +89,10 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
         <button
           type="button"
           onClick={onClose}
-          className="ml-auto rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="ml-auto flex h-8 w-8 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
           aria-label="Close modal"
         >
-          x
+          <X className="h-5 w-5" />
         </button>
       </header>
 

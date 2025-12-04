@@ -1,76 +1,68 @@
 'use client';
 
 import { ProductFilters } from './features/products/components/ProductFilters';
+import { SearchInput } from './common/components/SearchInput';
 import { useProducts } from './features/products/hooks/useProducts';
 import { useQueryParams } from './common/hooks/useQueryParams';
+import { useSearch } from './common/hooks/useSearch';
 import { ProductGrid } from './features/products/components/ProductGrid';
 import { usePagination } from './common/hooks/usePagination';
 import { Pagination } from './common/components/Pagination';
+import { ProductLoadingSkeleton } from './features/products/components/ProductLoadingSkeleton';
+import { ProductErrorDisplay } from './features/products/components/ProductErrorDisplay';
+import { ProductErrorBoundary } from './features/products/components/ProductErrorBoundary';
+import ProductHeader from './features/products/components/ProductHeader';
 
 export default function ProductPage() {
   const { getParam, setParams } = useQueryParams();
   const category = getParam('category');
   const setCategory = (value: string) => setParams({ category: value });
 
+  const { searchTerm } = useSearch();
   const { currentPage, pageSize, handlePageChange, handlePageSizeChange } =
     usePagination();
 
-  const { products, isLoading, error, total } = useProducts({
+  const { data, isFetching, isError, error, refetch } = useProducts({
     page: currentPage,
     pageSize,
+    searchTerm,
   });
 
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-lg">Loading products...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <p className="mb-4 text-lg text-red-600">Error: {error.message}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-          >
-            Retry
-          </button>
-          d
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen p-8">
-      <main className="mx-auto max-w-7xl">
-        <header className="flex flex-col items-center justify-center mb-8 text-center">
-          <span>Products</span>
-          <h1 className="text-3xl font-bold text-gray-900">Our Products</h1>
-          <p className="mt-2 text-gray-600">
-            Have a good setup for your minimalist home.
-          </p>
-        </header>
+    <ProductErrorBoundary>
+      <div className="min-h-screen p-8">
+        <main className="mx-auto max-w-7xl">
+          <ProductHeader
+            title="Our Products"
+            eyebrow="Products"
+            description="Have a good setup for your minimalist home."
+          />
+          <ProductFilters
+            activeFilter={category}
+            handleSelectFilter={setCategory}
+          />
+          <SearchInput />
 
-        <ProductFilters
-          activeFilter={category}
-          handleSelectFilter={setCategory}
-        />
+          {isFetching && <ProductLoadingSkeleton />}
 
-        <ProductGrid products={products} />
+          {isError && !isFetching && (
+            <ProductErrorDisplay error={error} onRetry={refetch} />
+          )}
 
-        <Pagination
-          currentPage={currentPage}
-          totalItems={total}
-          pageSize={pageSize}
-          onPageChange={handlePageChange}
-          onPageSizeChange={handlePageSizeChange}
-        />
-      </main>
-    </div>
+          {data && !isError && (
+            <>
+              <ProductGrid products={data.products} />
+              <Pagination
+                currentPage={currentPage}
+                totalItems={data.total}
+                pageSize={pageSize}
+                onPageChange={handlePageChange}
+                onPageSizeChange={handlePageSizeChange}
+              />
+            </>
+          )}
+        </main>
+      </div>
+    </ProductErrorBoundary>
   );
 }

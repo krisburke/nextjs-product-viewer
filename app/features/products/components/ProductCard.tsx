@@ -10,7 +10,10 @@ interface ProductCardProps {
   onClick?: (product: Product) => void;
 }
 
-export const ProductCard = memo(function ProductCard({ product, onClick }: ProductCardProps) {
+export const ProductCard = memo(function ProductCard({
+  product,
+  onClick,
+}: ProductCardProps) {
   const handleCardClick = (
     event: React.MouseEvent<HTMLElement, MouseEvent>,
   ) => {
@@ -59,4 +62,4 @@ export const ProductCard = memo(function ProductCard({ product, onClick }: Produ
       </div>
     </article>
   );
-})
+});

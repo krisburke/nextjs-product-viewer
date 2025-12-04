@@ -16,14 +16,14 @@ export function ProductGrid({ products }: ProductGridProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleProductClick = useCallback((product: Product) => {
-  setSelectedProduct(product);
-  setIsModalOpen(true);
-}, []);
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  }, []);
 
- const handleCloseModal = useCallback(() => {
-  setIsModalOpen(false);
-  setSelectedProduct(null);
-}, []);
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+  }, []);
 
   if (products.length === 0) {
     return (

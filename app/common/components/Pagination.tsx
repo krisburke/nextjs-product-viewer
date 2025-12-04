@@ -1,4 +1,5 @@
 'use client';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface PaginationProps {
   currentPage: number;
@@ -32,7 +33,6 @@ export function Pagination({
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8">
-      {/* Items per page selector */}
       <div className="flex items-center gap-2 text-sm text-gray-700">
         <label htmlFor="pageSize" className="font-medium">
           Items per page:
@@ -51,7 +51,6 @@ export function Pagination({
         </select>
       </div>
 
-      {/* Page navigation */}
       {totalPages > 1 && (
         <div className="flex items-center gap-4">
           <button
@@ -60,19 +59,7 @@ export function Pagination({
             className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             aria-label="Previous page"
           >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
+            <ChevronLeft className="w-5 h-5" />
           </button>
 
           <span className="text-sm text-gray-700">
@@ -85,24 +72,11 @@ export function Pagination({
             className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             aria-label="Next page"
           >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
+            <ChevronRight className="w-5 h-5" />
           </button>
         </div>
       )}
 
-      {/* Total items count */}
       <div className="text-sm text-gray-600">
         {totalItems} {totalItems === 1 ? 'item' : 'items'} total
       </div>

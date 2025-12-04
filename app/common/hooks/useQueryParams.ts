@@ -2,11 +2,15 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 
+type AllowedParams = 'category' | 'page' | 'limit' | 'q';
+
 export function useQueryParams() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const setParams = (updates: Record<string, string | null>) => {
+  const setParams = (
+    updates: Partial<Record<AllowedParams, string | null>>,
+  ) => {
     const params = new URLSearchParams(searchParams);
 
     for (const [key, value] of Object.entries(updates)) {
@@ -20,7 +24,7 @@ export function useQueryParams() {
     router.push(`?${params.toString()}`);
   };
 
-  const getParam = (key: string) => searchParams.get(key);
+  const getParam = (key: AllowedParams) => searchParams.get(key);
 
   return { getParam, setParams };
 }
