@@ -1,30 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Product Listing Application
+
+A Next.js-based product listing demo featuring search, filtering, pagination, and accessible modal interactions.
+
+Built to demonstrate modern React and Next.js patterns for data fetching, state management, and UI composition.
+
+**Preview on CodeSandbox:** [Open Project](https://codesandbox.io/p/github/krisburke/nextjs-product-viewer)  
+**Template used:** [Next.js Starter Template](https://codesandbox.io/templates/nextjs)
+
+## Features
+
+### Core
+
+- Product grid showing image, title, price, and description
+- Fetches products from [DummyJSON API](https://dummyjson.com/products)
+- Debounced search (250 ms) with URL-synced query
+- Pagination (10 / 50 / 100 items per page)
+- Accessible modal implementation using semantic HTML and keyboard support
+- User-friendly error handling and retry
+- Performance optimizations for rendering and data fetching
+
+### Extras
+
+- URL-based state so filters and pagination persist when sharing/bookmarking
+- Category filters (Living Room, Office, Decor, Kitchen, Bath)
+- Responsive layout using Tailwind CSS
+
+## Tech Stack
+
+- **Framework:** Next.js 15 (App Router)
+- **UI Framework**: React 19 + TypeScript
+- **Styling:** Tailwind CSS
+- **Data Fetching:** TanStack React Query
+- **Package Manager:** pnpm
+
+## Project Structure
+
+```
+app/
+├── common/          # Shared UI + hooks
+├── features/
+│   └── products/    # Product components, hooks, lib
+├── lib/             # Global utilities
+├── providers/       # React context
+├── styles/          # Global CSS
+├── layout.tsx       # Root layout + error boundary
+└── page.tsx         # Product listing page
+```
 
 ## Getting Started
 
-First, run the development server:
+**Requirements:** Node 18+, pnpm 10+
 
 ```bash
-pnpm dev
+pnpm install   # Install dependencies
+pnpm dev       # Start dev server
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Other scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+pnpm build     # Production build
+pnpm start     # Run production server
+pnpm lint      # Lint with ESLint
+pnpm format    # Format with Prettier
+```
 
-## Learn More
+## API
 
-To learn more about Next.js, take a look at the following resources:
+Uses [DummyJSON](https://dummyjson.com):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Endpoint                        | Description              |
+| ------------------------------- | ------------------------ |
+| `/products`                     | Fetch paginated products |
+| `/products/search`              | Search by query          |
+| `/products/category/{category}` | Filter by category       |
