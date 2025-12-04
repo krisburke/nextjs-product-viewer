@@ -1,10 +1,12 @@
+import { memo } from 'react';
+
 export interface ProductHeaderProps {
   title: string;
   eyebrow?: string;
   description: string;
 }
 
-export function ProductHeader({
+export const ProductHeader = memo(function ProductHeader({
   title,
   eyebrow,
   description,
@@ -20,4 +22,4 @@ export function ProductHeader({
       <p className="m-2 text-gray-600">{description}</p>
     </header>
   );
-}
+});

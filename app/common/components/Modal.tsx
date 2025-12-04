@@ -12,7 +12,6 @@ interface ModalProps {
 
 export function Modal({ isOpen, onClose, children, title }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const previouslyFocused = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -20,18 +19,10 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
 
     if (isOpen) {
       if (!dialog.open) {
-        previouslyFocused.current = document.activeElement as HTMLElement;
         dialog.showModal();
       }
-
-      dialog.focus();
     } else {
-      const prev = previouslyFocused.current;
-
-      requestAnimationFrame(() => {
-        dialog.close();
-        prev?.focus?.();
-      });
+      dialog.close();
     }
   }, [isOpen]);
 
@@ -89,7 +80,7 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
         <button
           type="button"
           onClick={onClose}
-          className="ml-auto flex h-8 w-8 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="ml-auto flex h-8 w-8 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           aria-label="Close modal"
         >
           <X className="h-5 w-5" />

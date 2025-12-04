@@ -1,7 +1,8 @@
 'use client';
+import { memo } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-interface PaginationProps {
+interface PaginationControlsProps {
   currentPage: number;
   totalItems: number;
   pageSize: number;
@@ -11,13 +12,13 @@ interface PaginationProps {
 
 const PAGE_SIZE_OPTIONS = [10, 50, 100];
 
-export function Pagination({
+export const PaginationControls = memo(function Pagination({
   currentPage,
   totalItems,
   pageSize,
   onPageChange,
   onPageSizeChange,
-}: PaginationProps) {
+}: PaginationControlsProps) {
   const totalPages = Math.ceil(totalItems / pageSize);
   const hasPrevious = currentPage > 1;
   const hasNext = currentPage < totalPages;
@@ -82,4 +83,4 @@ export function Pagination({
       </div>
     </div>
   );
-}
+});

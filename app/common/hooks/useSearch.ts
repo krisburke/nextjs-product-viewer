@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import debounce from 'lodash.debounce';
 import { useQueryParams } from './useQueryParams';
+import { INITIAL_CATEGORY } from '@/app/features/products/lib/constants';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -15,7 +16,7 @@ export function useSearch() {
   const clearSearch = () => setSearchInputValue('');
 
   const handleSearchTermChange = useCallback((term: string) => {
-    setParams({ q: term, page: '1', category: 'all' });
+    setParams({ q: term, page: '1', category: INITIAL_CATEGORY });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

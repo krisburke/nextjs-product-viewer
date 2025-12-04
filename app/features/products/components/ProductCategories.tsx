@@ -1,12 +1,17 @@
 'use client';
 
 import clsx from 'clsx';
-import { PRODUCT_CATEGORIES } from '../lib/constants';
-import { useCategory } from '../hooks/useCategory';
+import { PRODUCT_CATEGORIES, ProductCategory } from '../lib/constants';
 
-export function ProductCategories() {
-  const { category: activeCategory, setCategory } = useCategory();
+interface ProductCategoriesProps {
+  category: ProductCategory;
+  onCategoryChange: (category: ProductCategory) => void;
+}
 
+export function ProductCategories({
+  category: activeCategory,
+  onCategoryChange,
+}: ProductCategoriesProps) {
   return (
     <ol
       className="
@@ -18,17 +23,21 @@ export function ProductCategories() {
     "
     >
       {PRODUCT_CATEGORIES.map((category) => (
-        <li
-          key={category.key}
-          onClick={() => setCategory(category.key)}
-          className={clsx(
-            'cursor-pointer p-2 transition-colors shrink-0',
-            activeCategory === category.key
-              ? 'font-semibold text-slate-900'
-              : 'text-slate-500 hover:text-slate-700',
-          )}
-        >
-          {category.label}
+        <li key={category.key}>
+          <button
+            onClick={() => onCategoryChange(category.key)}
+            className={clsx(
+              'cursor-pointer p-2 transition-colors shrink-0 rounded',
+              'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1',
+              activeCategory === category.key
+                ? 'font-semibold text-slate-900'
+                : 'text-slate-500 hover:text-slate-700',
+            )}
+            aria-pressed={activeCategory === category.key}
+            aria-label={`Filter by ${category.label}`}
+          >
+            {category.label}
+          </button>
         </li>
       ))}
     </ol>

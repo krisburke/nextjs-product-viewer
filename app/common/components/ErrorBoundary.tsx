@@ -11,7 +11,7 @@ interface ErrorBoundaryState {
   error: Error | null;
 }
 
-export class ProductErrorBoundary extends React.Component<
+export class ErrorBoundary extends React.Component<
   ErrorBoundaryProps,
   ErrorBoundaryState
 > {
@@ -25,20 +25,15 @@ export class ProductErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Product Error Boundary caught an error:', error, errorInfo);
+    console.error('Error Boundary caught an error:', error, errorInfo);
   }
-
-  resetErrorBoundary = () => {
-    this.setState({ hasError: false, error: null });
-  };
 
   render() {
     if (this.state.hasError) {
       return (
         <ErrorAlert
-          title="Rendering Error"
-          description="Something went wrong displaying the products. Please try refreshing the page."
-          onRetry={this.resetErrorBoundary}
+          title="Something Went Wrong"
+          description="An unexpected error occurred. Please refresh the page."
         />
       );
     }

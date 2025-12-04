@@ -30,7 +30,7 @@ export const ProductCard = memo(function ProductCard({
 
   return (
     <article
-      className="cursor-pointer overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-lg focus-within:ring-2 focus-within:ring-blue-500"
+      className="cursor-pointer overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-lg focus-visible:ring-2 focus-visible:ring-blue-500"
       onClick={handleCardClick}
       onKeyDown={handleCardEnter}
       tabIndex={0}
