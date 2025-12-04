@@ -27,7 +27,7 @@ export default function ProductPage() {
   });
 
   return (
-    <div className="min-h-screen p-8">
+    <div className="min-h-screen p-4 sm:p-8">
       <main className="mx-auto max-w-7xl">
         <ProductHeader
           title="Our Products"

@@ -71,16 +71,21 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
       aria-labelledby={title ? 'modal-title' : undefined}
       className="w-full max-w-3xl rounded-lg bg-white p-0 shadow-xl backdrop:bg-black backdrop:bg-opacity-50"
     >
-      <header className="sticky top-0 z-10 flex items-center justify-between border-b bg-white px-6 py-4">
-        {title && (
-          <h2 id="modal-title" className="text-xl font-semibold text-gray-900">
+      <header className="sticky top-0 z-10 flex items-center justify-between border-b bg-white px-6 py-3">
+        {title ? (
+          <h2
+            id="modal-title"
+            className="text-xl font-semibold text-gray-900 leading-none m-0"
+          >
             {title}
           </h2>
+        ) : (
+          <div />
         )}
         <button
           type="button"
           onClick={onClose}
-          className="ml-auto flex h-8 w-8 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          className="flex h-8 w-8 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           aria-label="Close modal"
         >
           <X className="h-5 w-5" />

@@ -78,7 +78,7 @@ export const PaginationControls = memo(function Pagination({
         </div>
       )}
 
-      <div className="text-sm text-gray-600">
+      <div className="hidden sm:block text-sm text-gray-600">
         {totalItems} {totalItems === 1 ? 'item' : 'items'} total
       </div>
     </div>
