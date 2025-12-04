@@ -1,27 +1,24 @@
-export const PRODUCT_FILTERS = [
+export const PRODUCT_CATEGORIES = [
   { key: 'all', label: 'All Products' },
-  { key: 'living-room', label: 'Living Room' },
+  { key: 'living', label: 'Living Room' },
   { key: 'office', label: 'Office' },
   { key: 'decor', label: 'Decor' },
   { key: 'kitchen', label: 'Kitchen' },
   { key: 'bath', label: 'Bath' },
 ] as const;
 
-export type ProductFilter = (typeof PRODUCT_FILTERS)[number]['key'];
+export const INITIAL_CATEGORY = 'all';
 
-// Maps each UI filter to one or more DummyJSON API category values.
-export const CATEGORY_MAP: Record<ProductFilter, string[]> = {
-  all: [
-    'furniture',
-    'home-decoration',
-    'laptops',
-    'kitchen-accessories',
-    'beauty',
-    'skin-care',
-  ],
-  'living-room': ['furniture', 'home-decoration'],
-  office: ['laptops'],
-  decor: ['home-decoration'],
-  kitchen: ['kitchen-accessories'],
-  bath: ['beauty', 'skin-care'],
+export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number]['key'];
+
+// Maps each UI filter to a reasonable DummyJSON API category.
+export const CATEGORY_API_MAP: Record<
+  Exclude<ProductCategory, 'all'>,
+  string
+> = {
+  living: 'furniture',
+  office: 'laptops',
+  decor: 'home-decoration',
+  kitchen: 'kitchen-accessories',
+  bath: 'fragrances',
 };

@@ -8,14 +8,14 @@ const DEBOUNCE_DELAY = 250;
 
 export function useSearch() {
   const { getParam, setParams } = useQueryParams();
-  const querySearchTerm = getParam('q') || '';
+  const searchTermParam = getParam('q') || '';
 
-  const [searchInputValue, setSearchInputValue] = useState('');
+  const [searchInputValue, setSearchInputValue] = useState(searchTermParam);
 
   const clearSearch = () => setSearchInputValue('');
 
   const handleSearchTermChange = useCallback((term: string) => {
-    setParams({ q: term, page: '1' });
+    setParams({ q: term, page: '1', category: 'all' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -31,9 +31,14 @@ export function useSearch() {
     debouncedFn(searchInputValue);
   }, [searchInputValue, debouncedFn]);
 
+  // Sync input value when URL param changes externally
+  useEffect(() => {
+    setSearchInputValue(searchTermParam);
+  }, [searchTermParam]);
+
   return {
     searchInputValue,
-    searchTerm: querySearchTerm,
+    searchTerm: searchTermParam,
     setSearchInputValue,
     clearSearch,
   };

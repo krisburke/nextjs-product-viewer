@@ -4,7 +4,7 @@ export interface ProductHeaderProps {
   description: string;
 }
 
-export default function ProductHeader({
+export function ProductHeader({
   title,
   eyebrow,
   description,
