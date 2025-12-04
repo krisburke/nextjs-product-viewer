@@ -11,6 +11,7 @@ import { ProductLoadingSkeleton } from './features/products/components/ProductLo
 import { ProductErrorDisplay } from './features/products/components/ProductErrorDisplay';
 import { ProductHeader } from './features/products/components/ProductHeader';
 import { useCategory } from './features/products/hooks/useCategory';
+import { ScrollToTop } from './common/components/ScrollToTop';
 
 export default function ProductPage() {
   const { category, setCategory } = useCategory();
@@ -19,7 +20,7 @@ export default function ProductPage() {
   const { currentPage, pageSize, handlePageChange, handlePageSizeChange } =
     usePagination();
 
-  const { data, isFetching, isError, error, refetch } = useProducts({
+  const { data, isPending, isError, error, refetch } = useProducts({
     page: currentPage,
     pageSize,
     searchTerm,
@@ -27,7 +28,7 @@ export default function ProductPage() {
   });
 
   return (
-    <div className="min-h-screen p-4 sm:p-8">
+    <div className="min-h-screen p-4 pb-24 sm:p-8 sm:pb-8">
       <main className="mx-auto max-w-7xl">
         <ProductHeader
           title="Our Products"
@@ -41,9 +42,9 @@ export default function ProductPage() {
           onClear={clearSearch}
         />
 
-        {isFetching && <ProductLoadingSkeleton />}
+        {isPending && <ProductLoadingSkeleton />}
 
-        {isError && !isFetching && (
+        {isError && !isPending && (
           <ProductErrorDisplay error={error} onRetry={refetch} />
         )}
 
@@ -60,6 +61,7 @@ export default function ProductPage() {
           </>
         )}
       </main>
+      {(pageSize === 50 || pageSize === 100) && <ScrollToTop />}
     </div>
   );
 }

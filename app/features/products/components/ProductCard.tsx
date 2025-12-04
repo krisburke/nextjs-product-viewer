@@ -38,13 +38,19 @@ export const ProductCard = memo(function ProductCard({
       aria-label={`View details for ${product.title}`}
     >
       <figure className="aspect-square w-full overflow-hidden bg-gray-200">
-        <Image
-          src={product.images[0]}
-          alt={product.title}
-          width={300}
-          height={300}
-          className="h-full w-full object-cover"
-        />
+        {product.images?.[0] ? (
+          <Image
+            src={product.images[0]}
+            alt={product.title}
+            width={300}
+            height={300}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-gray-300 text-gray-500">
+            No image available
+          </div>
+        )}
         <figcaption className="sr-only">{product.title}</figcaption>
       </figure>
       <div className="p-4">

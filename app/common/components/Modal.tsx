@@ -20,9 +20,13 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
     if (isOpen) {
       if (!dialog.open) {
         dialog.showModal();
+        // Lock body scroll
+        document.body.style.overflow = 'hidden';
       }
     } else {
       dialog.close();
+      // Unlock body scroll
+      document.body.style.overflow = '';
     }
   }, [isOpen]);
 

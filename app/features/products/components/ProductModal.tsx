@@ -17,14 +17,19 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
       {product ? (
         <article className="flex flex-col gap-6 md:flex-row md:items-start">
           <figure className="w-full flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 md:w-64">
-            <Image
-              src={product.images[0]}
-              alt={product.title}
-              width={256}
-              height={256}
-              className="aspect-square h-full w-full object-cover"
-              priority
-            />
+            {product.images?.[0] ? (
+              <Image
+                src={product.images[0]}
+                alt={product.title}
+                width={256}
+                height={256}
+                className="aspect-square h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex aspect-square h-full w-full items-center justify-center bg-gray-300 text-gray-500">
+                No image available
+              </div>
+            )}
           </figure>
           <div className="flex min-w-0 flex-1 flex-col gap-4">
             <p className="text-base text-gray-700">{product.description}</p>

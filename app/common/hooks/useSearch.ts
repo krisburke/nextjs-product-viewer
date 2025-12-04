@@ -15,10 +15,13 @@ export function useSearch() {
 
   const clearSearch = () => setSearchInputValue('');
 
-  const handleSearchTermChange = useCallback((term: string) => {
-    setParams({ q: term, page: '1', category: INITIAL_CATEGORY });
+  const handleSearchTermChange = useCallback(
+    (term: string) => {
+      setParams({ q: term, page: '1', category: INITIAL_CATEGORY });
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    [],
+  );
 
   const debouncedFn = useMemo(
     () =>
@@ -30,6 +33,10 @@ export function useSearch() {
 
   useEffect(() => {
     debouncedFn(searchInputValue);
+
+    return () => {
+      debouncedFn.cancel();
+    };
   }, [searchInputValue, debouncedFn]);
 
   // Sync input value when URL param changes externally
