@@ -11,7 +11,12 @@ I chose a feature-based folder structure with shared utilities because it keeps 
 
 For state management, search, pagination, and filters sync to the URL using small custom hooks. More complex state libraries weren’t needed; URL state keeps everything in one place, creates predictable behavior, enables sharing/bookmarking, and allows browser back/forward navigation to work naturally.
 
-This CodeSandbox template and the use of a third-party API pushed the app toward client components. With server components, fetching from external APIs often requires additional configuration, which wasn’t necessary here.
+## CSR vs SSR
+
+(edited to add clarification on this decision)
+
+I chose to use client-side rendering primarily to make the user interactions feel responsive, such as the search and dynamic pagination. If the requirements had mentioned SEO or if this were an actual E-Commerce site then SSR would be more appropriate. The initial page load could be improved by SSR, but the pagination and search would feel less interactive, and there would be a full page reload.
+
 
 ## Data Fetching
 
@@ -69,5 +74,4 @@ I imported the modal with `dynamic()` so it loads only when needed. While the co
 Potential improvements for a production version include:
 
 - Comprehensive tests (unit tests for utilities and hooks, integration/E2E tests for user flows)
-- Server Components / SSR, which would reduce client JS and improve initial load times
 - Using route-based state for the modal, as mentioned earlier
