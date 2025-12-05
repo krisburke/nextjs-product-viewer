@@ -1,5 +1,5 @@
 'use client';
-
+import { useState } from 'react';
 import { ProductCategories } from './features/products/components/ProductCategories';
 import { SearchInput } from './common/components/SearchInput';
 import { useProducts } from './features/products/hooks/useProducts';
@@ -19,6 +19,8 @@ export default function ProductPage() {
     useSearch();
   const { currentPage, pageSize, handlePageChange, handlePageSizeChange } =
     usePagination();
+  const [isShowSearch, setShowSearch] = useState(false);
+  const toggleShowSearch = () => setShowSearch(!isShowSearch);
 
   const { data, isPending, isError, error, refetch } = useProducts({
     page: currentPage,
@@ -35,12 +37,19 @@ export default function ProductPage() {
           eyebrow="Products"
           description="Have a good setup for your minimalist home."
         />
-        <ProductCategories category={category} onCategoryChange={setCategory} />
-        <SearchInput
-          value={searchInputValue}
-          onChange={setSearchInputValue}
-          onClear={clearSearch}
+        <ProductCategories
+          category={category}
+          onCategoryChange={setCategory}
+          toggleShowSearch={toggleShowSearch}
         />
+
+        {isShowSearch ? (
+          <SearchInput
+            value={searchInputValue}
+            onChange={setSearchInputValue}
+            onClear={clearSearch}
+          />
+        ) : null}
 
         {isPending && <ProductLoadingSkeleton />}
 
